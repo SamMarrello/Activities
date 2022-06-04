@@ -1,4 +1,6 @@
 using Backend;
+using Backend.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureWebHostDefaults(webBuilder =>
@@ -13,10 +15,13 @@ var services = scope.ServiceProvider;
 
 try
 {
-    //var context = services.GetRequiredService()
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
 }
 catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during db connection/migration");
 }
+
+await host.RunAsync();

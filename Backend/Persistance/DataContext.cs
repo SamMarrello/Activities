@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Backend.Domain;
 
 namespace Backend.Persistance;
 
@@ -8,4 +9,6 @@ public class DataContext : DbContext
     {
         
     }
+    
+    public DbSet<Activity> Activities { get; set; }
 }
